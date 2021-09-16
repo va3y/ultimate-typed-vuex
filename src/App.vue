@@ -5,12 +5,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import useStore from '@/store';
 import HelloWorld from './components/HelloWorld.vue';
+import { AUTH_ACTION_TYPES } from './store/auth/actions';
 
 export default defineComponent({
   name: 'App',
   components: {
     HelloWorld
+  },
+  setup() {
+    const store = useStore()
+    // store.dispatch(AUTH_ACTION_TYPES.REGISTER, '123')  // is error
+    store.dispatch(AUTH_ACTION_TYPES.REGISTER,{ email: '123'})  // is valid
   }
 });
 </script>
