@@ -1,7 +1,7 @@
-import { Canceler } from "axios";
+import { Requests } from "./types";
 
 export interface State {
-  requests: { [key: string]: Canceler };
+  requests: Requests;
 }
 
 export default (): State => ({

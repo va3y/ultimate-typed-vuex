@@ -1,4 +1,9 @@
-import { createStore, createLogger, Store as VuexStore, useStore as baseUseStore } from "vuex";
+import {
+  createStore,
+  createLogger,
+  Store as VuexStore,
+  useStore as baseUseStore,
+} from "vuex";
 import { InjectionKey } from "vue";
 
 import api, { Store as ApiStore } from "./api";
@@ -14,7 +19,8 @@ export interface RootState {
   auth: AuthState;
 }
 
-export type RootStore = ApiStore<Pick<RootState, "api">> & AuthStore<Pick<RootState, "auth">>;
+export type RootStore = ApiStore<Pick<RootState, "api">> &
+  AuthStore<Pick<RootState, "auth">>;
 
 export const store = createStore<RootState>({
   modules: { api, auth },

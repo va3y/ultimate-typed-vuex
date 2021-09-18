@@ -1,17 +1,19 @@
-import state, { State } from './state'
-import { mutations, Mutations } from './mutations'
-import { actions, Actions } from './actions'
+import state, { State } from "./state";
+import { mutations, Mutations } from "./mutations";
+import { actions, Actions } from "./actions";
+import { getters, Getters } from "./getters";
 
-import { RootState } from '@/store'
-import { Module } from 'vuex'
-import { GenericStore } from '../types'
+import { RootState } from "@/store";
+import { Module } from "vuex";
+import { GenericStore } from "../types";
 
 const api: Module<State, RootState> = {
   state,
   mutations,
   actions,
-}
+  getters,
+};
 
-export type Store<S = State> = GenericStore<S, Mutations, Actions>
+export type Store<S> = GenericStore<S, Mutations, Actions, Getters>;
 
-export default api
+export default api;
