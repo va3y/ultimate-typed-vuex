@@ -5,7 +5,7 @@ import { RootState } from "@/store";
 import { Module } from "vuex";
 import { GenericStore } from "../types";
 
-export type Store<S> = GenericStore<S, Mutations, Actions>;
+export type Store<S> = GenericStore<S, State, Mutations, Actions>;
 
 const authModule: Module<State, RootState> = {
   state,

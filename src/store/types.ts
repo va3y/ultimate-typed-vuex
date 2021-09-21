@@ -5,7 +5,12 @@ import { Store as VuexStore, CommitOptions, DispatchOptions } from "vuex";
 
 export type GenericActionContext<
   State,
-  Mutations extends { [key: string]: (state: State, payload: any) => void }
+  Mutations extends {
+    [key: string]: (
+      state: State,
+      payload: Parameters<Mutations[string]>[1]
+    ) => void;
+  }
 > = {
   commit<K extends keyof Mutations>(
     key: K,
@@ -14,15 +19,24 @@ export type GenericActionContext<
 } & ActionContext<State, RootState>;
 
 export type GenericStore<
-  State,
-  Mutations extends { [key: string]: (state: any, payload: any) => void },
-  Actions extends {
-    [key: string]: (state: any, payload: any) => void;
+  RootState,
+  LocalState,
+  Mutations extends {
+    [key: string]: (
+      state: LocalState,
+      payload: Parameters<Mutations[string]>[1]
+    ) => void;
   },
-  Getters extends { [key: string]: (state: any) => void } = {
+  Actions extends {
+    [key: string]: (
+      ctx: GenericActionContext<LocalState, Mutations>,
+      payload: Parameters<Actions[string]>[1]
+    ) => void;
+  },
+  Getters extends { [key: string]: (state: LocalState) => void } = {
     [key: string]: () => undefined;
   }
-> = Omit<VuexStore<State>, "commit" | "getters" | "dispatch"> & {
+> = Omit<VuexStore<RootState>, "commit" | "getters" | "dispatch"> & {
   commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
     key: K,
     payload: P,

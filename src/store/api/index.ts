@@ -14,6 +14,6 @@ const api: Module<State, RootState> = {
   getters,
 };
 
-export type Store<S> = GenericStore<S, Mutations, Actions, Getters>;
+export type Store<S> = GenericStore<S, State, Mutations, Actions, Getters>;
 
 export default api;

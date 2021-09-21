@@ -3,32 +3,32 @@ import { Mutations, AUTH_MUTATION_TYPES } from "./mutations";
 import { State } from "./state";
 import { RootState } from "@/store";
 import { ApiCallConfig, API_ACTION_TYPES } from "../api/actions";
-import { RegisterRequestBody } from "./types";
+import { LoginRequestBody } from "./types";
 import { GenericActionContext } from "../types";
 
 export enum AUTH_ACTION_TYPES {
-  REGISTER = "AUTH_REGISTER",
-  CHECK_EMAIL = "AUTH_CHECK_EMAIL",
+  LOGIN = "AUTH_LOGIN",
+  LOGIN2 = "AUTH_LOGIN2",
 }
 type AugmentedActionContext = GenericActionContext<State, Mutations>;
 
 export type Actions = {
-  [AUTH_ACTION_TYPES.REGISTER](
+  [AUTH_ACTION_TYPES.LOGIN](
     { commit }: AugmentedActionContext,
-    payload: RegisterRequestBody
+    payload: LoginRequestBody
   ): Promise<unknown>;
-  [AUTH_ACTION_TYPES.CHECK_EMAIL](
-    ctx: AugmentedActionContext,
-    payload: { email: string }
+  [AUTH_ACTION_TYPES.LOGIN2](
+    { commit }: AugmentedActionContext,
+    payload: string
   ): Promise<unknown>;
 };
 
 export const actions: ActionTree<State, RootState> & Actions = {
-  async [AUTH_ACTION_TYPES.CHECK_EMAIL]({ dispatch, commit }, payload) {
+  async [AUTH_ACTION_TYPES.LOGIN]({ dispatch, commit }, payload) {
     try {
       const res = await dispatch<ApiCallConfig & { type: string }>(
         {
-          url: "register/check-email",
+          url: "user/login",
           method: "POST",
           data: payload,
           type: API_ACTION_TYPES.API_CALL,
@@ -43,11 +43,11 @@ export const actions: ActionTree<State, RootState> & Actions = {
       return Promise.reject(error);
     }
   },
-  async [AUTH_ACTION_TYPES.REGISTER]({ dispatch, commit }, payload) {
+  async [AUTH_ACTION_TYPES.LOGIN2]({ dispatch, commit }, payload) {
     try {
       const res = await dispatch<ApiCallConfig & { type: string }>(
         {
-          url: "register/register",
+          url: "user/login",
           method: "POST",
           data: payload,
           type: API_ACTION_TYPES.API_CALL,

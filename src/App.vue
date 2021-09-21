@@ -8,6 +8,7 @@ import { defineComponent } from 'vue';
 import useStore from '@/store';
 import HelloWorld from './components/HelloWorld.vue';
 import { AUTH_ACTION_TYPES } from './store/auth/actions';
+import { AUTH_MUTATION_TYPES } from './store/auth/mutations';
 
 export default defineComponent({
   name: 'App',
@@ -16,8 +17,11 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    // store.dispatch(AUTH_ACTION_TYPES.REGISTER, '123')  // is error
-    store.dispatch(AUTH_ACTION_TYPES.REGISTER,{ email: '123'})  // is valid
+    // store.dispatch(AUTH_ACTION_TYPES.LOGIN, '123')  // is error
+    store.dispatch(AUTH_ACTION_TYPES.LOGIN,{ email: '123', password: '123'})  // is valid
+
+    // store.commit(AUTH_MUTATION_TYPES.SET_TOKEN, 1) // is error
+    store.commit(AUTH_MUTATION_TYPES.SET_TOKEN, '1') // is valid
   }
 });
 </script>
